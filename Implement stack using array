@@ -1,0 +1,60 @@
+class myStack {
+    private int size;
+    private int top;
+    private int st[];
+
+    public myStack(int n) {
+        // Define Data 
+         size=n;
+         top=-1;
+         st=new int[n];
+    }
+
+    public boolean isEmpty() {
+        if(top==-1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isFull() {
+       if(size-1==top)
+       {
+           return true;
+       }
+       return false;
+    
+    }
+
+    public void push(int x) {
+        // Inserts x at the top of the stack
+         if(isFull())
+       {
+           return ;
+       }
+       top++;
+        st[top]=x;
+        
+    }
+
+    public void pop() {
+        // Removes an element from the top of the stack
+        if(isEmpty())
+        {
+            return ;
+        }
+        //st[top]=0;
+        top--;
+        
+    }
+
+    public int peek() {
+        // Returns the top element of the stack
+        if(top==-1)
+        {
+            return -1;
+        }
+        return st[top];
+    }
+}
