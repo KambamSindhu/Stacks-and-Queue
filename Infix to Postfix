@@ -1,3 +1,83 @@
+Alright! Let’s focus **only on Infix → Postfix** and make it simple to remember and apply.
+
+---
+
+## **1. Postfix Rule (RPN)**
+
+* In **postfix**, the **operator comes after its operands**.
+* Example: `A + B` → `A B +`
+
+---
+
+## **2. Operator Precedence**
+
+When converting, remember the precedence:
+
+| Operator | Precedence |
+| -------- | ---------- |
+| `()`     | Highest    |
+| `^`      | 4          |
+| `* /`    | 3          |
+| `+ -`    | 2          |
+
+* Higher precedence operators go **before lower precedence operators** in postfix.
+* Associativity:
+
+  * `^` → right to left
+  * `* / + -` → left to right
+
+---
+
+## **3. Algorithm (Stack Method)**
+
+1. Initialize an empty stack for operators.
+2. Scan the infix expression **left to right**:
+
+   * **Operand** → add directly to postfix expression
+   * **`(`** → push to stack
+   * **`)`** → pop from stack and add to postfix until `(` is found, then discard `(`
+   * **Operator** →
+
+     * Pop from stack and add to postfix **all operators with higher or equal precedence** (consider associativity)
+     * Push the current operator onto the stack
+3. After the scan, **pop all remaining operators** from stack to postfix
+
+---
+
+## **4. Example**
+
+Infix: `(A + B) * C - D`
+
+**Step-by-step conversion:**
+
+| Step | Symbol | Stack | Postfix         |
+| ---- | ------ | ----- | --------------- |
+| 1    | `(`    | `(`   |                 |
+| 2    | `A`    | `(`   | `A`             |
+| 3    | `+`    | `( +` | `A`             |
+| 4    | `B`    | `( +` | `A B`           |
+| 5    | `)`    |       | `A B +`         |
+| 6    | `*`    | `*`   | `A B +`         |
+| 7    | `C`    | `*`   | `A B + C`       |
+| 8    | `-`    | `-`   | `A B + C *`     |
+| 9    | `D`    | `-`   | `A B + C * D`   |
+| End  |        |       | `A B + C * D -` |
+
+✅ **Final Postfix:** `A B + C * D -`
+
+---
+
+### **Memory Tip**
+
+* Think: **Operands go straight to output**, **operators wait in stack** until you know where they fit by precedence.
+* Use **parentheses as “temporary walls”** to control precedence.
+
+---
+
+If you want, I can also make a **super short trick chart** for **all operators and parentheses handling**, which makes infix → postfix almost **automatic to do mentally**.
+
+Do you want me to make that?
+===================================================================================
 class Solution {
     public static String infixToPostfix(String s) {
         // code here
