@@ -1,0 +1,61 @@
+class Solution {
+    public static String infixToPostfix(String s) {
+        // code here
+        Stack<Character> st=new Stack<>();
+        String ans="";
+        for(int i=0;i<s.length();i++)
+        {
+            char ch=s.charAt(i);
+            if(ch>='A' && ch<='Z' || ch>='a' && ch<='z' || ch>='0' && ch<='9')
+            {
+                ans+=ch;
+            }
+            else if(ch=='(')
+            {
+                st.push('(');
+            }
+            else if(ch==')')
+            {
+                while(!st.isEmpty() && st.peek()!='(')
+                {
+                    ans+=st.peek();
+                    st.pop();
+                }
+                st.pop();
+            }
+            else 
+            {
+        while(!st.isEmpty() && shouldPop(st.peek(),ch))
+                   {
+                       ans+=st.peek();
+                      
+                       st.pop();
+                       
+                   }
+                   st.push(ch);
+                
+                
+            }
+        }
+        while(!st.isEmpty())
+        {
+            ans+=st.peek();
+            st.pop();
+        }
+        return ans;
+    }
+    public static boolean shouldPop(char stackTop, char current) {
+        int p1 = priority(stackTop);
+        int p2 = priority(current);
+         if (stackTop == '^' && current == '^') return false;
+           return p1 >= p2; 
+    }
+    
+    public static int priority(char ch)
+    {
+       if(ch == '+' || ch == '-') return 1;
+        if(ch == '*' || ch == '/') return 2;
+        if(ch == '^') return 3;
+        return -1;
+    }
+}
