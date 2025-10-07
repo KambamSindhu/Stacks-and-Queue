@@ -1,0 +1,100 @@
+class Solution {
+    public int subarrayRanges(int[] arr) {
+        // code here
+        return subarrMax(arr)-subarrMin(arr);
+    }
+    public int subarrMax(int arr[])
+    {
+          int nge[]=ngeFun(arr);
+        int pgee[]=pgeeFun(arr);
+        int n=arr.length;
+        int total=0;
+        for(int i=0;i<n;i++)
+        {
+            int right=nge[i]-i;
+            int left=i-pgee[i];
+            total+=right*left*arr[i];
+        }
+        return total;
+    }
+     public int subarrMin(int arr[])
+    {
+        int nse[]=nseFun(arr);
+        int psee[]=pseeFun(arr);
+        int n=arr.length;
+         int total=0;
+        for(int i=0;i<n;i++)
+        {
+            int right=nse[i]-i;
+            int left=i-psee[i];
+            total+=right*left*arr[i];
+        }
+        return total;
+    }
+    public int[] pgeeFun(int arr[])
+    {
+        Stack<Integer> st=new Stack<>();
+        int n=arr.length;
+        int res[]=new int[n];
+        for(int i=0;i<=n-1;i++)
+        {
+            while(!st.isEmpty() && arr[st.peek()] < arr[i])
+            {
+                st.pop();
+            }
+            res[i]=st.isEmpty()?-1:st.peek();
+            st.push(i);
+        }
+        return res;
+    }
+    public int[] ngeFun(int arr[])
+    {
+          Stack<Integer> st=new Stack<>();
+        int n=arr.length;
+        int res[]=new int[n];
+        for(int i=n-1;i>=0;i--)
+        {
+            while(!st.isEmpty() && arr[st.peek()] <= arr[i])
+            {
+                st.pop();
+            }
+            res[i]=st.isEmpty()?n:st.peek();
+            st.push(i);
+        }
+        return res;
+    }
+    
+   
+    public int[] nseFun(int arr[])
+    {
+        Stack<Integer> st=new Stack<>();
+        int n=arr.length;
+        int res[]=new int[n];
+        for(int i=n-1;i>=0;i--)
+        {
+            while(!st.isEmpty() && arr[st.peek()] >= arr[i])
+            {
+                st.pop();
+            }
+            res[i]=st.isEmpty()?n:st.peek();
+            st.push(i);
+        }
+        return res;
+    }
+     public int[] pseeFun(int arr[])
+    {
+        Stack<Integer> st=new Stack<>();
+        int n=arr.length;
+        int res[]=new int[n];
+        for(int i=0;i<=n-1;i++)
+        {
+            while(!st.isEmpty() && arr[st.peek()] > arr[i])
+            {
+                st.pop();
+            }
+            res[i]=st.isEmpty()?-1:st.peek();
+            st.push(i);
+        }
+        return res;
+    }
+}
